@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador de CURP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            margin: auto; /* Para centrarlo en el eje vertical cuando haya scroll */
+        }
+        h1 {
+            color: #ff0000; /* Rojo */
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 1.2em;
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff0000; /* Rojo al pasar el ratón */
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #333;
+        }
+        th {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+        td {
+            background-color: #e0e0e0; /* Gris */
+            color: #333;
+            padding: 10px;
+        }
+        /* Alineación a la izquierda para la columna "Tipo" */
+        td:nth-child(2) {
+            text-align: left;
+        }
+        .result {
+            margin-top: 20px;
+            color: #0000ff; /* Azul */
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analizador de CURP</h1>
+        <form method="POST">
+            <label for="curp">Ingrese su CURP:</label>
+            <input type="text" id="curp" name="curp" required maxlength="18">
+            <button type="submit">Analizar</button>
+        </form>
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if curp %}
+        <h2>CURP Analizado: {{ curp }}</h2>
+        <table>
+            <tr>
+                <th>Token</th>
+                <th>Tipo</th>
+            </tr>
+            {% for token, tipo in token_data %}
+            <tr>
+                <td>{{ token }}</td>
+                <td>{{ tipo }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="result">
+            <p>Total de tokens: {{ total_tokens }}</p>
+        </div>
+        <div class="buttons">
+            <button type="reset" onclick="location.href='/'">Borrar</button> <!-- Botón de borrar -->
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
